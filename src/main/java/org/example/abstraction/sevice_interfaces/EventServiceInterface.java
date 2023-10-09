@@ -7,8 +7,9 @@ import java.time.Instant;
 
 public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);
-
 	Mono<Long> addEvent(AddEventDto addEventDto);
+	Mono<Void> deleteEvent(Long id);
+	Mono<Long> updateEvent(EditEventDto editEventDto);
 
 	record AddEventDto(
 		Long userId,
@@ -24,6 +25,25 @@ public interface EventServiceInterface {
 				addEventDto.startTime(),
 				addEventDto.duration(),
 				false
+			);
+		}
+	}
+
+	record EditEventDto(
+			Long id,
+			Long userId,
+			String summary,
+			Instant startTime,
+			Long duration
+	){
+		public static EventRepo.Event toDbEntity(EditEventDto editEventDto){
+			return new EventRepo.Event(
+					editEventDto.id(),
+					editEventDto.userId(),
+					editEventDto.summary(),
+					editEventDto.startTime(),
+					editEventDto.duration(),
+					false
 			);
 		}
 	}

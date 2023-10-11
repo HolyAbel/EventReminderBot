@@ -33,9 +33,9 @@ public class EventService implements EventServiceInterface {
 	}
 
 	@Override
-	public Mono<Long> updateEvent(EditEventDto editEventDto) {
+	public Mono<Long> updateEvent(EditEventDto editEventDto, Long id) {
 		return eventRepo
-				.save(EditEventDto.toDbEntity(editEventDto))
+				.save(EditEventDto.toDbEntity(editEventDto, id))
 				.map(EventRepo.Event::id);
 	}
 }

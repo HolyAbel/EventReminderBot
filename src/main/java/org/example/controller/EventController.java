@@ -14,11 +14,11 @@ public record EventController(
 	}
 
 	@PostMapping("/addEvent")
-	public Mono<Long> addById(@RequestBody EventServiceInterface.AddEventDto addTaskDto) {return eventService.addEvent(addTaskDto);}
+	public Mono<Long> addEvent(@RequestBody EventServiceInterface.AddEventDto addEventDto) {return eventService.addEvent(addEventDto);}
 
 	@DeleteMapping("/deleteEvent/{id}")
 	public Mono<Void> deleteById(@PathVariable Long id) {return eventService.deleteEvent(id);}
 
-	@PostMapping("/deleteEvent/{id}")
-	public Mono<Long> updateById(@RequestBody EventServiceInterface.EditEventDto editEventDto) {return eventService.updateEvent(editEventDto);}
+	@PostMapping("/updateEvent/{id}")
+	public Mono<Long> updateById(@RequestBody EventServiceInterface.EditEventDto editEventDto, @PathVariable Long id) {return eventService.updateEvent(editEventDto, id);}
 }

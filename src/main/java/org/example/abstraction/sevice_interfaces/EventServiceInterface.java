@@ -9,7 +9,27 @@ public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);
 	Mono<Long> addEvent(AddEventDto addEventDto);
 	Mono<Void> deleteEvent(Long id);
-	Mono<Long> updateEvent(EditEventDto editEventDto);
+	Mono<Long> updateEvent(EditEventDto editEventDto, Long id);
+
+	record EventDto(
+			Long id,
+			Long userId,
+			String summary,
+			Instant startTime,
+			Long duration,
+			Boolean isEnd
+	){
+		public static EventDto fromDbEntity(EventRepo.Event event){
+			return new EventDto(
+					event.id(),
+					event.userId(),
+					event.summary(),
+					event.startTime(),
+					event.duration(),
+					event.isEnd()
+			);
+		}
+	}
 
 	record AddEventDto(
 		Long userId,
@@ -30,15 +50,14 @@ public interface EventServiceInterface {
 	}
 
 	record EditEventDto(
-			Long id,
 			Long userId,
 			String summary,
 			Instant startTime,
 			Long duration
 	){
-		public static EventRepo.Event toDbEntity(EditEventDto editEventDto){
+		public static EventRepo.Event toDbEntity(EditEventDto editEventDto, Long id){
 			return new EventRepo.Event(
-					editEventDto.id(),
+					id,
 					editEventDto.userId(),
 					editEventDto.summary(),
 					editEventDto.startTime(),
@@ -47,23 +66,4 @@ public interface EventServiceInterface {
 			);
 		}
 	}
-
-	record EventDto(
-		Long id,
-		Long userId,
-		String summary,
-		Instant startTime,
-		Long duration
-	){
-		public static EventDto fromDbEntity(EventRepo.Event event){
-			return new EventDto(
-				event.id(),
-				event.userId(),
-				event.summary(),
-				event.startTime(),
-				event.duration()
-				);
-		}
-	}
-
 }

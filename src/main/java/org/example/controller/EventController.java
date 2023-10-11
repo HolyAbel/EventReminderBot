@@ -17,14 +17,24 @@ public record EventController(
 		return eventService.getById(id);
 	}
 
-//	@GetMapping("/getEvent/Next}")
-//	public Mono<EventServiceInterface.EventDto> findNext(@PathVariable Long id){
-//		return eventService.getById(id);
-//	}
-
 	@GetMapping("/getEvents/{datetime}")
 	public Flux<EventServiceInterface.EventDto> findByDatetime(@PathVariable Instant datetime){
 		return eventService.getByDatetime(datetime);
+	}
+
+	@GetMapping("/getNext")
+	public Mono<EventServiceInterface.EventDto> findNext(){
+		return eventService.getNext();
+	}
+
+	@GetMapping("/getDay")
+	public Flux<EventServiceInterface.EventDto> findDay(){
+		return eventService.getDay(Instant.now());
+	}
+
+	@GetMapping("/getWeek")
+	public Flux<EventServiceInterface.EventDto> findWeek(){
+		return eventService.getWeek(Instant.now());
 	}
 
 	@PostMapping("/addEvent")

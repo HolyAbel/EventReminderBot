@@ -11,6 +11,9 @@ import java.util.Date;
 public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);
 	Flux<EventDto> getByDatetime(Instant datetime);
+	Mono<EventDto> getNext();
+	Flux<EventDto> getDay(Instant datetime);
+	Flux<EventDto> getWeek(Instant datetime);
 	Mono<Long> addEvent(AddEventDto addEventDto);
 	Mono<Void> deleteEvent(Long id);
 	Mono<Long> updateEvent(EditEventDto editEventDto, Long id);

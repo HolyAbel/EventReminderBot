@@ -2,7 +2,11 @@ package org.example.controller;
 
 import org.example.abstraction.sevice_interfaces.EventServiceInterface;
 import org.springframework.web.bind.annotation.*;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Instant;
+import java.util.Date;
 
 @RestController
 public record EventController(
@@ -11,6 +15,16 @@ public record EventController(
 	@GetMapping("/getEvent/{id}")
 	public Mono<EventServiceInterface.EventDto> findById(@PathVariable Long id){
 		return eventService.getById(id);
+	}
+
+//	@GetMapping("/getEvent/Next}")
+//	public Mono<EventServiceInterface.EventDto> findNext(@PathVariable Long id){
+//		return eventService.getById(id);
+//	}
+
+	@GetMapping("/getEvents/{datetime}")
+	public Flux<EventServiceInterface.EventDto> findByDatetime(@PathVariable Instant datetime){
+		return eventService.getByDatetime(datetime);
 	}
 
 	@PostMapping("/addEvent")

@@ -4,7 +4,11 @@ import org.example.abstraction.sevice_interfaces.EventServiceInterface;
 import org.example.repository.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+
+import java.time.Instant;
+import java.util.Date;
 
 @Service
 public class EventService implements EventServiceInterface {
@@ -15,15 +19,21 @@ public class EventService implements EventServiceInterface {
 	@Override
 	public Mono<EventDto> getById(Long id) {
 		return eventRepo
-			.findById(id)
-			.map(EventDto::fromDbEntity);
+				.findById(id)
+				.map(EventDto::fromDbEntity);
+	}
+
+	@Override
+	public Flux<EventDto> getByDatetime(Instant datetime) {
+		return eventRepo
+				.findByDatetime(datetime);
 	}
 
 	@Override
 	public Mono<Long> addEvent(AddEventDto addEventDto) {
 		return eventRepo
-			.save(AddEventDto.toDbEntity(addEventDto))
-			.map(EventRepo.Event::id);
+				.save(AddEventDto.toDbEntity(addEventDto))
+				.map(EventRepo.Event::id);
 	}
 
 	@Override

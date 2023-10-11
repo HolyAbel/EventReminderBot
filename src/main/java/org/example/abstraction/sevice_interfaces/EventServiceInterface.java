@@ -1,12 +1,16 @@
 package org.example.abstraction.sevice_interfaces;
 
 import org.example.repository.EventRepo;
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.sql.Time;
 import java.time.Instant;
+import java.util.Date;
 
 public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);
+	Flux<EventDto> getByDatetime(Instant datetime);
 	Mono<Long> addEvent(AddEventDto addEventDto);
 	Mono<Void> deleteEvent(Long id);
 	Mono<Long> updateEvent(EditEventDto editEventDto, Long id);
@@ -15,8 +19,9 @@ public interface EventServiceInterface {
 			Long id,
 			Long userId,
 			String summary,
-			Instant startTime,
+			Instant datetime,
 			Long duration,
+			Integer type,
 			Boolean isEnd
 	){
 		public static EventDto fromDbEntity(EventRepo.Event event){
@@ -24,8 +29,9 @@ public interface EventServiceInterface {
 					event.id(),
 					event.userId(),
 					event.summary(),
-					event.startTime(),
+					event.datetime(),
 					event.duration(),
+					event.type(),
 					event.isEnd()
 			);
 		}
@@ -34,16 +40,18 @@ public interface EventServiceInterface {
 	record AddEventDto(
 		Long userId,
 		String summary,
-		Instant startTime,
-		Long duration
+		Instant datetime,
+		Long duration,
+		Integer type
 	){
 		public static EventRepo.Event toDbEntity(AddEventDto addEventDto){
 			return new EventRepo.Event(
 				null,
 				addEventDto.userId(),
 				addEventDto.summary(),
-				addEventDto.startTime(),
+				addEventDto.datetime(),
 				addEventDto.duration(),
+				addEventDto.type(),
 				false
 			);
 		}
@@ -52,16 +60,18 @@ public interface EventServiceInterface {
 	record EditEventDto(
 			Long userId,
 			String summary,
-			Instant startTime,
-			Long duration
+			Instant datetime,
+			Long duration,
+			Integer type
 	){
 		public static EventRepo.Event toDbEntity(EditEventDto editEventDto, Long id){
 			return new EventRepo.Event(
 					id,
 					editEventDto.userId(),
 					editEventDto.summary(),
-					editEventDto.startTime(),
+					editEventDto.datetime(),
 					editEventDto.duration(),
+					editEventDto.type(),
 					false
 			);
 		}

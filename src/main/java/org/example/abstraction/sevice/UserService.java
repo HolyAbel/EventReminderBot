@@ -27,4 +27,11 @@ public class UserService implements UserServiceInterface {
 				.save(UserServiceInterface.AddUserDto.toDbEntity(addUserDto))
 				.map(UserRepo.User::id);
 	}
+
+	@Override
+	public Mono<UserDto> signIn(UserServiceInterface.SignInDto signInDto) {
+		return userRepo
+				.signIn(signInDto.login(), signInDto.password())
+				.map(UserDto::fromDbEntity);
+	}
 }

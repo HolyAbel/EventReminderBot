@@ -22,6 +22,11 @@ public record EventController(
 		return eventService.getByDatetime(datetime);
 	}
 
+	@GetMapping("/getEvents/{type}")
+	public Flux<EventServiceInterface.EventDto> findByType(@PathVariable Integer type){
+		return eventService.getByType(type);
+	}
+
 	@GetMapping("/getNext")
 	public Mono<EventServiceInterface.EventDto> findNext(){
 		return eventService.getNext();

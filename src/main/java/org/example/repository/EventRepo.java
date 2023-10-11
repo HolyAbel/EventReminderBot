@@ -27,6 +27,7 @@ public interface EventRepo extends ReactiveCrudRepository<EventRepo.Event, Long>
 	){}
 
 	Flux<EventRepo.Event> findByDatetime(Instant datetime);
+	Flux<EventRepo.Event>findByType(Integer type);
 
 	@Query("SELECT * " +
 			"FROM event " +

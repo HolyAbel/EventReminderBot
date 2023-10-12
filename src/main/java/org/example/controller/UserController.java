@@ -20,16 +20,12 @@ public record UserController(
 
 	@PostMapping("/signIn")
 	public Mono<UserServiceInterface.UserDto> signIn(@RequestBody UserServiceInterface.SignInDto signInDto, HttpServletResponse response) {
-		Mono<UserServiceInterface.UserDto> user = userService.signIn(signInDto);
-		if (user != null) {
-			Cookie userCookie = new Cookie("userId", String.valueOf(user.map(UserServiceInterface.UserDto::id)));
-
-			userCookie.setMaxAge(3600);
-			userCookie.setPath("/");
-
-			response.addCookie(userCookie);
-		}
-
-		return user;
+		return userService.signIn(signInDto)
+				.doOnNext(user -> {
+					var cookie = new Cookie("userId", String.valueOf(user.id()));
+					cookie.setMaxAge(3600);
+					cookie.setPath("/");
+					response.addCookie(cookie);
+				});
 	}
 }

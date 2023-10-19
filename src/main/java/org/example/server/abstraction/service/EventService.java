@@ -31,10 +31,11 @@ public class EventService implements EventServiceInterface {
 	}
 
 	@Override
-	public Flux<EventDto> getByType(Integer type) {
+	public Mono<List<EventDto>> getByType(Integer type) {
 		return eventRepo
 				.findByType(type)
-				.map(EventDto::fromDbEntity);
+				.map(EventDto::fromDbEntity)
+				.collectList();
 	}
 
 	@Override

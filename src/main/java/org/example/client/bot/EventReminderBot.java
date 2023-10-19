@@ -15,7 +15,10 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,21 +37,33 @@ public class EventReminderBot extends TelegramLongPollingBot {
     private static final String START = "/start";
     private static final String HELP = "/help";
     private static final String ADDEVENT = "/add_event";
+    private static final String UPDATEEVENT = "/update_event";
     private static final String DELETEEVENT = "/delete_event";
     private static final String GETNEXTEVENT = "/next_event";
-    private static final String GETDAYEVENTS = "/day_events";
-    private static final String GETWEEKEVENTS = "/week_events";
+    private static final String GETDAYEVENTS = "/day_event";
+    private static final String GETWEEKEVENTS = "/week_event";
+    private static final String GETRECEVENTS = "/rec_events";
 
     private static final String COMMANDS = """
                 Command list:
-                /start - start
+                /start
+                
                 /help - get help
+                
+                /add_event {summary} {date} {time} {duration} {type} - add event; 
+                types: 0 - non recurring, 1 - hourly, 2 - daily, 3 - weekly, 4 - monthly
+                
+                /update_event {id} {summary} {date} {time} {duration} {type} - update event by id
+                
+                /delete_event {id} - delete event by id
+                
                 /next_event - get next event
+                
                 /day_event - get events for a day
+                
                 /week_event - get events for a week
-                /add_event - add event
-                /update_event - update event by id
-                /delete_event - delete event by id
+                
+                /rec_events - get all recurring tasks
             """;
 
     public EventReminderBot(@Value("${bot.token}") String botToken) {
@@ -68,11 +83,13 @@ public class EventReminderBot extends TelegramLongPollingBot {
                 startCommand(chatId, userName);
             }
             case HELP -> helpCommand(chatId);
-            case ADDEVENT -> addEvent(chatId, message[1], message[2], message[3], message[4]);
+            case ADDEVENT -> addEvent(chatId, message[1], message[2], message[3], message[4], message[5]);
+            case UPDATEEVENT -> updateEvent(chatId, message[1], message[2], message[3], message[4], message[5], message[6]);
             case DELETEEVENT -> deleteEvent(chatId, message[1]);
             case GETNEXTEVENT -> getNextEvent(chatId);
             case GETDAYEVENTS -> getDayEvents(chatId);
             case GETWEEKEVENTS -> getWeekEvents(chatId);
+            case GETRECEVENTS -> getRecEvents(chatId);
         }
     }
 
@@ -83,7 +100,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
 
     private void startCommand(Long chatId, String name) {
         try {
-            userService.getByName(name);
+            userService.addUser(new UserService.AddUserDto(chatId, "", name, ""));;
         } catch (Exception e) {
             LOG.error("Error of getting user name;", e);
             sendMessage(chatId, "Can't connect to the server.");
@@ -103,30 +120,53 @@ public class EventReminderBot extends TelegramLongPollingBot {
         sendMessage(chatId, formattedText);
     }
 
-    public void addEvent(Long chatId, String summary, String datetime, String duration, String type) {
-//        String input =
-//        eventService.addEvent(new EventServiceInterface.AddEventDto((long)2, summary, (Instant)datetime, (long)duration, (int)type));
-//        sendMessage(chatId, "Event add success.");
+    public void addEvent(Long chatId, String summary, String date, String time, String duration, String type) {
+        String input = date + "; " + time;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd; HH:mm:ss");
+        try {
+            Date dateTime = simpleDateFormat.parse(input);
+            EventServiceInterface.AddEventDto eventDto = new EventServiceInterface
+                    .AddEventDto(2L , summary, dateTime.toInstant(), Long.valueOf(duration), Integer.valueOf(type));
+            eventService.addEvent(eventDto).block();
+            sendMessage(chatId, "Addition success!");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void deleteEvent(Long chatId, String id) {
-
+    private void updateEvent(Long chatId, String id, String summary, String date, String time, String duration, String type) {
+        String input = date + "; " + time;
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd; HH:mm:ss");
+        try {
+            Date dateTime = simpleDateFormat.parse(input);
+            EventServiceInterface.EditEventDto eventDto  = new EventServiceInterface
+                    .EditEventDto(2L , summary, dateTime.toInstant(), Long.valueOf(duration), Integer.valueOf(type));
+            eventService.updateEvent(eventDto, Long.valueOf(id)).block();
+            sendMessage(chatId, "Update success!");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+    private void deleteEvent(Long chatId, String id) {
+        eventService.deleteEvent(Long.valueOf(id)).block();
+        sendMessage(chatId, "Delete success!");
     }
 
     public void getNextEvent(Long chatId) {
-        Mono<EventServiceInterface.EventDto> eventMono = eventService.getNext();
+        Mono<EventServiceInterface.EventDto> event = eventService.getNext();
         String msg = "";
-        if (Objects.equals(eventMono.block(), null)) {
+        if (Objects.equals(event.block(), null)) {
             msg = "Cannot find next event";
         }
         else {
-            String dt = eventMono.block().datetime().toString();
+            String dt = event.block().datetime().toString();
             dt.replace("T", " ");
             dt.replace("Z", "");
             msg = "Next event:\n" +
-                    "Summary: " + eventMono.block().summary() + "\n" +
-                    "Date and time: " + eventMono.block().datetime() + "\n" +
-                    "Duration: " + eventMono.block().duration() + " seconds";
+                    "Id: " + + event.block().id() + "\n" +
+                    "Summary: " + event.block().summary() + "\n" +
+                    "Date and time: " + event.block().datetime() + "\n" +
+                    "Duration: " + event.block().duration() + " seconds";
         }
         sendMessage(chatId, msg);
     }
@@ -141,6 +181,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
             msg = "Events for a day:";
             for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
                 msg = msg + "\n\n" +
+                        "Id: " + + event.id() + "\n" +
                         "Summary: " + event.summary() + "\n" +
                         "Date and time: " + event.datetime() + "\n" +
                         "Duration: " + event.duration() + " seconds";
@@ -159,9 +200,41 @@ public class EventReminderBot extends TelegramLongPollingBot {
             msg = "Events for a week:";
             for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
                 msg = msg + "\n\n" +
+                        "Id: " + + event.id() + "\n" +
                         "Summary: " + event.summary() + "\n" +
                         "Date and time: " + event.datetime() + "\n" +
                         "Duration: " + event.duration() + " seconds";
+            }
+        }
+        sendMessage(chatId, msg);
+    }
+
+    private void getRecEvents(Long chatId) {
+        String msg = "";
+        for (int i = 1; i <= 4; i++) {
+            Mono<List<EventServiceInterface.EventDto>> eventMonoList = eventService.getByType(i);
+            if (Objects.equals(eventMonoList.block(), null)) {
+                switch (i) {
+                    case 1 -> msg += "\nCannot find hourly event\n\n";
+                    case 2 -> msg += "\nCannot find daily event\n\n";
+                    case 3 -> msg += "\nCannot find weekly event\n\n";
+                    case 4 -> msg += "\nCannot find monthly event\n\n";
+                }
+            }
+            else {
+                switch (i) {
+                    case 1 -> msg += "\nHourly events:\n\n";
+                    case 2 -> msg += "\nDaily events:\n\n";
+                    case 3 -> msg += "\nWeekly events:\n\n";
+                    case 4 -> msg += "\nMonthly events:\n\n";
+                }
+                for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
+                    msg = msg +
+                            "Id: " + + event.id() + "\n" +
+                            "Summary: " + event.summary() + "\n" +
+                            "Date and time: " + event.datetime() + "\n" +
+                            "Duration: " + event.duration() + " seconds\n\n";
+                }
             }
         }
         sendMessage(chatId, msg);

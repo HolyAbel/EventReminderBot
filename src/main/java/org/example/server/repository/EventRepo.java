@@ -29,6 +29,7 @@ public interface EventRepo extends ReactiveCrudRepository<EventRepo.Event, Long>
 
 	@Query("SELECT * " +
 			"FROM event " +
+//			"INNER JOIN user ON event.user_id = user.id" +
 			"WHERE event.datetime > now() " +
 			"ORDER BY event.datetime " +
 			"LIMIT 1")
@@ -36,6 +37,7 @@ public interface EventRepo extends ReactiveCrudRepository<EventRepo.Event, Long>
 
 	@Query("SELECT * " +
 			"FROM event " +
+//			"INNER JOIN user ON event.user_id = user.id" +
 			"WHERE event.datetime < :datetime " +
 			"ORDER BY event.datetime")
 	Flux<EventRepo.Event> findAllByDatetimeLessThen(Instant datetime);

@@ -26,13 +26,14 @@ public interface UserServiceInterface {
 	}
 
 	record AddUserDto(
+			Long id,
 			String name,
 			String login,
 			String password
 	){
 		public static UserRepo.User toDbEntity(UserServiceInterface.AddUserDto addUserDto){
 			return new UserRepo.User(
-					null,
+					addUserDto.id(),
 					addUserDto.name(),
 					addUserDto.login(),
 					addUserDto.password()

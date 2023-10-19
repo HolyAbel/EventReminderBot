@@ -23,7 +23,7 @@ public record EventController(
 	}
 
 	@GetMapping("/getEvents/{type}")
-	public Flux<EventServiceInterface.EventDto> findByType(@PathVariable Integer type){
+	public Mono<List<EventServiceInterface.EventDto>> findByType(@PathVariable Integer type){
 		return eventService.getByType(type);
 	}
 

@@ -10,7 +10,7 @@ import java.util.List;
 public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);
 	Flux<EventDto> getByDatetime(Instant datetime);
-	Flux<EventDto> getByType(Integer type);
+	Mono<List<EventDto>> getByType(Integer type);
 	Mono<EventDto> getNext();
 	Mono<List<EventDto>> getDay(Instant datetime);
 	Mono<List<EventDto>> getWeek(Instant datetime);

@@ -1,6 +1,6 @@
-package org.example.sever.controller;
+package org.example.server.controller;
 
-import org.example.sever.abstraction.sevice_interfaces.EventServiceInterface;
+import org.example.server.abstraction.service_interfaces.EventServiceInterface;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

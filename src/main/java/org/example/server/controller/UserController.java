@@ -1,8 +1,8 @@
-package org.example.sever.controller;
+package org.example.server.controller;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.sever.abstraction.sevice_interfaces.UserServiceInterface;
+import org.example.server.abstraction.service_interfaces.UserServiceInterface;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 

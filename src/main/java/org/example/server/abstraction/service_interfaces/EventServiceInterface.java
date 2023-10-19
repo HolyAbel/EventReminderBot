@@ -1,6 +1,6 @@
-package org.example.sever.abstraction.sevice_interfaces;
+package org.example.server.abstraction.service_interfaces;
 
-import org.example.sever.repository.EventRepo;
+import org.example.server.repository.EventRepo;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

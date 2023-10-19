@@ -1,7 +1,7 @@
-package org.example.sever.abstraction.sevice;
+package org.example.server.abstraction.service;
 
-import org.example.sever.abstraction.sevice_interfaces.UserServiceInterface;
-import org.example.sever.repository.UserRepo;
+import org.example.server.abstraction.service_interfaces.UserServiceInterface;
+import org.example.server.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;

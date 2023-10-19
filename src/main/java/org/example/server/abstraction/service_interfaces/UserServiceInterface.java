@@ -1,6 +1,6 @@
-package org.example.sever.abstraction.sevice_interfaces;
+package org.example.server.abstraction.service_interfaces;
 
-import org.example.sever.repository.UserRepo;
+import org.example.server.repository.UserRepo;
 import reactor.core.publisher.Mono;
 
 public interface UserServiceInterface {

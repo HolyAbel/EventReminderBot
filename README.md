@@ -41,8 +41,6 @@ Command list:
 
 ![image](https://github.com/HolyAbel/EventReminderBot/blob/master/week_event.JPG)
 
-![image](https://github.com/HolyAbel/EventReminderBot/blob/master/rec_events.JPG)
-
 ## Реализованный функционал сервера
 ### User
 1. /getUser/{id} - получение данных учетной записи пользователя, соответствующего id.

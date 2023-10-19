@@ -5,14 +5,23 @@
 
 Command list:
     /start
+    
     /help - get help
+    
     /add_event {summary} {date} {time} {duration} {type} - add event;
+    
     types: 0 - non recurring, 1 - hourly, 2 - daily, 3 - weekly, 4 - monthly
+    
     /update_event {id} {summary} {date} {time} {duration} {type} - update event by id
+    
     /delete_event {id} - delete event by id
+    
     /next_event - get next event
+    
     /day_event - get events for a day
+    
     /week_event - get events for a week
+    
     /rec_events - get all recurring tasks
 
 

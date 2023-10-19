@@ -25,7 +25,23 @@ Command list:
     
     /rec_events - get all recurring tasks
 
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/help.JPG)
 
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/start.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/add_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/update_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/delete_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/next_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/day_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/week_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/rec_events.JPG)
 
 ## Реализованный функционал сервера
 ### User

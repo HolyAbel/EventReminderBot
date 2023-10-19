@@ -1,6 +1,6 @@
-package org.example.server.controller;
+package hsai.edu.server.controller;
 
-import org.example.server.abstraction.service_interfaces.EventServiceInterface;
+import hsai.edu.server.abstraction.service_interfaces.EventServiceInterface;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

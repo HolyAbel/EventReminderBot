@@ -1,9 +1,9 @@
-package org.example.client.bot;
+package hsai.edu.client.bot;
 
-import org.example.client.Client;
-import org.example.server.abstraction.service.EventService;
-import org.example.server.abstraction.service.UserService;
-import org.example.server.abstraction.service_interfaces.EventServiceInterface;
+import hsai.edu.client.Client;
+import hsai.edu.server.abstraction.service.EventService;
+import hsai.edu.server.abstraction.service.UserService;
+import hsai.edu.server.abstraction.service_interfaces.EventServiceInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

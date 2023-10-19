@@ -1,4 +1,4 @@
-package org.example.client.exception;
+package hsai.edu.client.exception;
 
 public class ServiceException extends Exception  {
     public ServiceException(String message) {

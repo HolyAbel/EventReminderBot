@@ -23,10 +23,10 @@
     </parent>
 
     <groupId>sbpstu</groupId>
-    <artifactId>example</artifactId>
+    <artifactId>edu</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>example</name>
-    <description>example</description>
+    <name>edu</name>
+    <description>edu</description>
 
     <properties>
         <java.version>18</java.version>

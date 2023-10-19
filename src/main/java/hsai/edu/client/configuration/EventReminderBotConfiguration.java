@@ -1,7 +1,6 @@
-package org.example.client.configuration;
+package hsai.edu.client.configuration;
 
-import org.example.client.bot.EventReminderBot;
-import org.springframework.beans.factory.annotation.Autowired;
+import hsai.edu.client.bot.EventReminderBot;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.TelegramBotsApi;

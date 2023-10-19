@@ -1,6 +1,6 @@
-package org.example.server.abstraction.service_interfaces;
+package hsai.edu.server.abstraction.service_interfaces;
 
-import org.example.server.repository.EventRepo;
+import hsai.edu.server.repository.EventRepo;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 

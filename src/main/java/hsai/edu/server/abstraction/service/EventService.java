@@ -1,7 +1,7 @@
-package org.example.server.abstraction.service;
+package hsai.edu.server.abstraction.service;
 
-import org.example.server.abstraction.service_interfaces.EventServiceInterface;
-import org.example.server.repository.EventRepo;
+import hsai.edu.server.abstraction.service_interfaces.EventServiceInterface;
+import hsai.edu.server.repository.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

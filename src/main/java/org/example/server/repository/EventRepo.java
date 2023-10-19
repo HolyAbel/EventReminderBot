@@ -36,7 +36,7 @@ public interface EventRepo extends ReactiveCrudRepository<EventRepo.Event, Long>
 
 	@Query("SELECT * " +
 			"FROM event " +
-			"WHERE event.datetime > :datetime " +
+			"WHERE event.datetime < :datetime " +
 			"ORDER BY event.datetime")
 	Flux<EventRepo.Event> findAllByDatetimeLessThen(Instant datetime);
 }

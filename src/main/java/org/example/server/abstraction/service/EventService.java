@@ -8,6 +8,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
+import java.util.List;
 
 @Service
 public class EventService implements EventServiceInterface {
@@ -44,17 +45,19 @@ public class EventService implements EventServiceInterface {
 	}
 
 	@Override
-	public Flux<EventDto> getDay(Instant datetime) {
+	public Mono<List<EventDto>> getDay(Instant datetime) {
 		return eventRepo
 				.findAllByDatetimeLessThen(datetime.plusSeconds(86400))
-				.map(EventDto::fromDbEntity);
+				.map(EventDto::fromDbEntity)
+				.collectList();
 	}
 
 	@Override
-	public Flux<EventDto> getWeek(Instant datetime) {
+	public Mono<List<EventDto>> getWeek(Instant datetime) {
 		return eventRepo
 				.findAllByDatetimeLessThen(datetime.plusSeconds(604800))
-				.map(EventDto::fromDbEntity);
+				.map(EventDto::fromDbEntity)
+				.collectList();
 	}
 
 	@Override

@@ -15,6 +15,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import reactor.core.publisher.Mono;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -34,12 +36,19 @@ public class EventReminderBot extends TelegramLongPollingBot {
     private static final String ADDEVENT = "/add_event";
     private static final String DELETEEVENT = "/delete_event";
     private static final String GETNEXTEVENT = "/next_event";
+    private static final String GETDAYEVENTS = "/day_events";
+    private static final String GETWEEKEVENTS = "/week_events";
 
     private static final String COMMANDS = """
                 Command list:
                 /start - start
                 /help - get help
                 /next_event - get next event
+                /day_event - get events for a day
+                /week_event - get events for a week
+                /add_event - add event
+                /update_event - update event by id
+                /delete_event - delete event by id
             """;
 
     public EventReminderBot(@Value("${bot.token}") String botToken) {
@@ -62,6 +71,8 @@ public class EventReminderBot extends TelegramLongPollingBot {
             case ADDEVENT -> addEvent(chatId, message[1], message[2], message[3], message[4]);
             case DELETEEVENT -> deleteEvent(chatId, message[1]);
             case GETNEXTEVENT -> getNextEvent(chatId);
+            case GETDAYEVENTS -> getDayEvents(chatId);
+            case GETWEEKEVENTS -> getWeekEvents(chatId);
         }
     }
 
@@ -104,10 +115,55 @@ public class EventReminderBot extends TelegramLongPollingBot {
 
     public void getNextEvent(Long chatId) {
         Mono<EventServiceInterface.EventDto> eventMono = eventService.getNext();
-        var msg = Objects.equals(eventMono.block(), null) ? "Cannot find next event" : "Next event:\n" +
-                "Summary: " + eventMono.block().summary() + "\n" +
-                "Date and time: " + eventMono.block().datetime() + "\n" +
-                "Duration: " + eventMono.block().duration() + " seconds";
+        String msg = "";
+        if (Objects.equals(eventMono.block(), null)) {
+            msg = "Cannot find next event";
+        }
+        else {
+            String dt = eventMono.block().datetime().toString();
+            dt.replace("T", " ");
+            dt.replace("Z", "");
+            msg = "Next event:\n" +
+                    "Summary: " + eventMono.block().summary() + "\n" +
+                    "Date and time: " + eventMono.block().datetime() + "\n" +
+                    "Duration: " + eventMono.block().duration() + " seconds";
+        }
+        sendMessage(chatId, msg);
+    }
+
+    public void getDayEvents(Long chatId) {
+        Mono<List<EventServiceInterface.EventDto>> eventMonoList = eventService.getDay(Instant.now());
+        String msg = "";
+        if (Objects.equals(eventMonoList.block(), null)) {
+            msg = "Cannot find next event";
+        }
+        else {
+            msg = "Events for a day:";
+            for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
+                msg = msg + "\n\n" +
+                        "Summary: " + event.summary() + "\n" +
+                        "Date and time: " + event.datetime() + "\n" +
+                        "Duration: " + event.duration() + " seconds";
+            }
+        }
+        sendMessage(chatId, msg);
+    }
+
+    public void getWeekEvents(Long chatId) {
+        Mono<List<EventServiceInterface.EventDto>> eventMonoList = eventService.getWeek(Instant.now());
+        String msg = "";
+        if (Objects.equals(eventMonoList.block(), null)) {
+            msg = "Cannot find next event";
+        }
+        else {
+            msg = "Events for a week:";
+            for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
+                msg = msg + "\n\n" +
+                        "Summary: " + event.summary() + "\n" +
+                        "Date and time: " + event.datetime() + "\n" +
+                        "Duration: " + event.duration() + " seconds";
+            }
+        }
         sendMessage(chatId, msg);
     }
 

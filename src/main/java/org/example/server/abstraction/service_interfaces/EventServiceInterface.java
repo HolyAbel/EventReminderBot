@@ -5,14 +5,15 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
+import java.util.List;
 
 public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);
 	Flux<EventDto> getByDatetime(Instant datetime);
 	Flux<EventDto> getByType(Integer type);
 	Mono<EventDto> getNext();
-	Flux<EventDto> getDay(Instant datetime);
-	Flux<EventDto> getWeek(Instant datetime);
+	Mono<List<EventDto>> getDay(Instant datetime);
+	Mono<List<EventDto>> getWeek(Instant datetime);
 	Mono<Long> addEvent(AddEventDto addEventDto);
 	Mono<Void> deleteEvent(Long id);
 	Mono<Long> updateEvent(EditEventDto editEventDto, Long id);

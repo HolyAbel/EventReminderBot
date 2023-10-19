@@ -6,6 +6,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
+import java.util.List;
 
 @RestController
 public record EventController(
@@ -32,12 +33,12 @@ public record EventController(
 	}
 
 	@GetMapping("/getDay")
-	public Flux<EventServiceInterface.EventDto> findDay(){
+	public Mono<List<EventServiceInterface.EventDto>> findDay(){
 		return eventService.getDay(Instant.now());
 	}
 
 	@GetMapping("/getWeek")
-	public Flux<EventServiceInterface.EventDto> findWeek(){
+	public Mono<List<EventServiceInterface.EventDto>> findWeek(){
 		return eventService.getWeek(Instant.now());
 	}
 

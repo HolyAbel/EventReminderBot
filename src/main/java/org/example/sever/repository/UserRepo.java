@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.sever.repository;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.r2dbc.repository.Query;
@@ -19,6 +19,8 @@ public interface UserRepo extends ReactiveCrudRepository<UserRepo.User, Long> {
 		String login,
 		String password
 	){}
+
+	Mono<UserRepo.User> findByName(@Param("name") String name);
 
 	@Query("SELECT * FROM user WHERE user.login = :login AND user.password = :password")
 	Mono<UserRepo.User> signIn(@Param("login") String login, @Param("password") String password);

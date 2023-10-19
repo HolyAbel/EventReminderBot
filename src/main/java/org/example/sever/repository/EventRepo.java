@@ -1,10 +1,8 @@
-package org.example.repository;
+package org.example.sever.repository;
 
-import org.example.abstraction.sevice_interfaces.EventServiceInterface;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.r2dbc.repository.Query;
 import org.springframework.data.relational.core.mapping.Table;
-import org.springframework.data.repository.query.Param;
 import org.springframework.data.repository.reactive.ReactiveCrudRepository;
 import org.springframework.stereotype.Repository;
 import reactor.core.publisher.Flux;
@@ -31,14 +29,14 @@ public interface EventRepo extends ReactiveCrudRepository<EventRepo.Event, Long>
 
 	@Query("SELECT * " +
 			"FROM event " +
-			"WHERE event.datetime < now() " +
+			"WHERE event.datetime > now() " +
 			"ORDER BY event.datetime " +
 			"LIMIT 1")
 	Mono<EventRepo.Event> findNext();
 
 	@Query("SELECT * " +
 			"FROM event " +
-			"WHERE event.datetime < :datetime " +
+			"WHERE event.datetime > :datetime " +
 			"ORDER BY event.datetime")
 	Flux<EventRepo.Event> findAllByDatetimeLessThen(Instant datetime);
 }

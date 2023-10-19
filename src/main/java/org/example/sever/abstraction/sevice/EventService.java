@@ -1,7 +1,7 @@
-package org.example.abstraction.sevice;
+package org.example.sever.abstraction.sevice;
 
-import org.example.abstraction.sevice_interfaces.EventServiceInterface;
-import org.example.repository.EventRepo;
+import org.example.sever.abstraction.sevice_interfaces.EventServiceInterface;
+import org.example.sever.repository.EventRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

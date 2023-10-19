@@ -1,11 +1,11 @@
-package org.example.abstraction.sevice_interfaces;
+package org.example.sever.abstraction.sevice_interfaces;
 
-import org.example.repository.EventRepo;
-import org.example.repository.UserRepo;
+import org.example.sever.repository.UserRepo;
 import reactor.core.publisher.Mono;
 
 public interface UserServiceInterface {
 	Mono<UserDto> getById(Long id);
+	Mono<UserDto> getByName(String name);
 	Mono<Long> addUser(UserServiceInterface.AddUserDto addUserDto);
 	Mono<UserDto> signIn(UserServiceInterface.SignInDto signInDto);
 

@@ -1,12 +1,10 @@
-package org.example.abstraction.sevice_interfaces;
+package org.example.sever.abstraction.sevice_interfaces;
 
-import org.example.repository.EventRepo;
+import org.example.sever.repository.EventRepo;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.sql.Time;
 import java.time.Instant;
-import java.util.Date;
 
 public interface EventServiceInterface {
 	Mono<EventDto> getById(Long id);

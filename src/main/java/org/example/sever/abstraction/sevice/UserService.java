@@ -1,9 +1,7 @@
-package org.example.abstraction.sevice;
+package org.example.sever.abstraction.sevice;
 
-import org.example.abstraction.sevice_interfaces.EventServiceInterface;
-import org.example.abstraction.sevice_interfaces.UserServiceInterface;
-import org.example.repository.EventRepo;
-import org.example.repository.UserRepo;
+import org.example.sever.abstraction.sevice_interfaces.UserServiceInterface;
+import org.example.sever.repository.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
@@ -19,6 +17,13 @@ public class UserService implements UserServiceInterface {
 		return userRepo
 			.findById(id)
 			.map(UserDto::fromDbEntity);
+	}
+
+	@Override
+	public Mono<UserDto> getByName(String name) {
+		return userRepo
+				.findByName(name)
+				.map(UserDto::fromDbEntity);
 	}
 
 	@Override

@@ -1,8 +1,8 @@
-package org.example.controller;
+package org.example.sever.controller;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import org.example.abstraction.sevice_interfaces.UserServiceInterface;
+import org.example.sever.abstraction.sevice_interfaces.UserServiceInterface;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
@@ -13,6 +13,11 @@ public record UserController(
 	@GetMapping("/getUser/{id}")
 	public Mono<UserServiceInterface.UserDto> findById(@PathVariable Long id){
 		return userService.getById(id);
+	}
+
+	@GetMapping("/getUser/{name}")
+	public Mono<UserServiceInterface.UserDto> findByName(@PathVariable String name){
+		return userService.getByName(name);
 	}
 
 	@PostMapping("/signUp")

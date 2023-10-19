@@ -4,20 +4,44 @@
 Ссылка на бота в Телеграм: [Event Reminder Bot](t.me/event_reminder_pb_bot)
 
 Command list:
+
     /start
+    
     /help - get help
+    
     /add_event {summary} {date} {time} {duration} {type} - add event;
+    
     types: 0 - non recurring, 1 - hourly, 2 - daily, 3 - weekly, 4 - monthly
+    
     /update_event {id} {summary} {date} {time} {duration} {type} - update event by id
+    
     /delete_event {id} - delete event by id
+    
     /next_event - get next event
+    
     /day_event - get events for a day
+    
     /week_event - get events for a week
+    
     /rec_events - get all recurring tasks
 
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/help.JPG)
 
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/start.JPG)
 
-## Реализованный функционал
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/add_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/update_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/delete_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/next_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/day_event.JPG)
+
+![image](https://github.com/HolyAbel/EventReminderBot/blob/master/week_event.JPG)
+
+## Реализованный функционал сервера
 ### User
 1. /getUser/{id} - получение данных учетной записи пользователя, соответствующего id.
 2. /signUp - создание новой учетной записи пользователя.

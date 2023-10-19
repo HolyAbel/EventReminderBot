@@ -4,6 +4,7 @@
 Ссылка на бота в Телеграм: [Event Reminder Bot](t.me/event_reminder_pb_bot)
 
 Command list:
+
     /start
     
     /help - get help

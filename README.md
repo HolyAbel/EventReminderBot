@@ -1,7 +1,7 @@
 # Event Reminder
 
 ## Telegram bot
-Ссылка на бота в Телеграм: [Event Reminder Bot](t.me/event_reminder_pb_bot)
+Ссылка на бота в Телеграм: t.me/event_reminder_pb_bot
 
 Command list:
 

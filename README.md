@@ -7,23 +7,23 @@ Command list:
 
     /start
     
-    /help - get help
+    /help - получить список комманд
     
-    /add_event {summary} {date} {time} {duration} {type} - add event;
+    /add_event {summary} {date} {time} {duration} {type} - добавить событие
     
-    types: 0 - non recurring, 1 - hourly, 2 - daily, 3 - weekly, 4 - monthly
+    типы событий (type): 0 - не повторяющееся, 1 - ежечасное, 2 - ежедневное, 3 - еженедельное, 4 - ежемесячное
     
-    /update_event {id} {summary} {date} {time} {duration} {type} - update event by id
+    /update_event {id} {summary} {date} {time} {duration} {type} - изменить событие с соответствующим id
     
-    /delete_event {id} - delete event by id
+    /delete_event {id} - удалить событие с соответствующим id
     
-    /next_event - get next event
+    /next_event - получить следующее событие
     
-    /day_event - get events for a day
+    /day_event - получить события на следующие 24 часа
     
-    /week_event - get events for a week
+    /week_event - получить на следующие 168 часов
     
-    /rec_events - get all recurring tasks
+    /rec_events - получить все повторяющиеся события
 
 ![image](https://github.com/HolyAbel/EventReminderBot/blob/master/help.JPG)
 
@@ -52,8 +52,8 @@ Command list:
 2. /getEvents/{datetime} -- получение события по datetime - дате и времени.
 3. /getEvents/{type} - получение события по типу - type.
 4. /getNext - получение следующего на очереди события.
-5. /getDay - получение событий, которые произойдут в блихжайшие 24 часа (1 день).
-6. /getWeek - получение событий, которые произойдут в блихжайшие 168 часов (7 дней).
+5. /getDay - получение событий, которые произойдут в близжайшие 24 часа (1 день).
+6. /getWeek - получение событий, которые произойдут в близжайшие 168 часов (7 дней).
 7. /addEvent - создание нового события.
 8. /deleteEvent/{id} - удаление события, соответствующего id.
 9. /updateEvent/{id} - обновление события, соответствующего id.

@@ -3,15 +3,13 @@
 ## Telegram bot
 Ссылка на бота в Телеграм: t.me/event_reminder_pb_bot
 
-Command list:
+Список комманд:
 
     /start
     
     /help - получить список комманд
     
-    /add_event {summary} {date} {time} {duration} {type} - добавить событие
-    
-    типы событий (type): 0 - не повторяющееся, 1 - ежечасное, 2 - ежедневное, 3 - еженедельное, 4 - ежемесячное
+    /add_event {summary} {date} {time} {duration} {type} - добавить событие (типы событий (type): 0 - не повторяющееся, 1 - ежечасное, 2 - ежедневное, 3 - еженедельное, 4 - ежемесячное)
     
     /update_event {id} {summary} {date} {time} {duration} {type} - изменить событие с соответствующим id
     

@@ -100,7 +100,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
 
     private void startCommand(Long chatId, String name) {
         try {
-            userService.addUser(new UserService.AddUserDto(chatId, "", name, "", chatId));;
+            userService.addUser(new UserService.AddUserDto(null, "", name, "", chatId));;
         } catch (Exception e) {
             LOG.error("Error of getting user name;", e);
             sendMessage(chatId, "Can't connect to the server.");
@@ -126,7 +126,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
         try {
             Date dateTime = simpleDateFormat.parse(input);
             EventServiceInterface.AddEventDto eventDto = new EventServiceInterface
-                    .AddEventDto(2L , summary, dateTime.toInstant(), Long.valueOf(duration), Integer.valueOf(type));
+                    .AddEventDto(chatId , summary, dateTime.toInstant(), Long.valueOf(duration), Integer.valueOf(type));
             eventService.addEvent(eventDto).block();
             sendMessage(chatId, "Addition success!");
         } catch (ParseException e) {
@@ -140,7 +140,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
         try {
             Date dateTime = simpleDateFormat.parse(input);
             EventServiceInterface.EditEventDto eventDto  = new EventServiceInterface
-                    .EditEventDto(2L , summary, dateTime.toInstant(), Long.valueOf(duration), Integer.valueOf(type));
+                    .EditEventDto(chatId , summary, dateTime.toInstant(), Long.valueOf(duration), Integer.valueOf(type));
             eventService.updateEvent(eventDto, Long.valueOf(id)).block();
             sendMessage(chatId, "Update success!");
         } catch (ParseException e) {
@@ -165,7 +165,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
             msg = "Next event:\n" +
                     "Id: " + + event.block().id() + "\n" +
                     "Summary: " + event.block().summary() + "\n" +
-                    "Date and time: " + event.block().datetime() + "\n" +
+                    "Date and time: " + dt + "\n" +
                     "Duration: " + event.block().duration() + " seconds";
         }
         sendMessage(chatId, msg);
@@ -180,10 +180,13 @@ public class EventReminderBot extends TelegramLongPollingBot {
         else {
             msg = "Events for a day:";
             for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
+                String dt = event.datetime().toString();
+                dt.replace("T", " ");
+                dt.replace("Z", "");
                 msg = msg + "\n\n" +
                         "Id: " + + event.id() + "\n" +
                         "Summary: " + event.summary() + "\n" +
-                        "Date and time: " + event.datetime() + "\n" +
+                        "Date and time: " + dt + "\n" +
                         "Duration: " + event.duration() + " seconds";
             }
         }
@@ -199,10 +202,13 @@ public class EventReminderBot extends TelegramLongPollingBot {
         else {
             msg = "Events for a week:";
             for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
+                String dt = event.datetime().toString();
+                dt.replace("T", " ");
+                dt.replace("Z", "");
                 msg = msg + "\n\n" +
                         "Id: " + + event.id() + "\n" +
                         "Summary: " + event.summary() + "\n" +
-                        "Date and time: " + event.datetime() + "\n" +
+                        "Date and time: " + dt + "\n" +
                         "Duration: " + event.duration() + " seconds";
             }
         }
@@ -229,11 +235,14 @@ public class EventReminderBot extends TelegramLongPollingBot {
                     case 4 -> msg += "\nMonthly events:\n\n";
                 }
                 for (EventServiceInterface.EventDto event: eventMonoList.block().stream().toList()) {
-                    msg = msg +
+                    String dt = event.datetime().toString();
+                    dt.replace("T", " ");
+                    dt.replace("Z", "");
+                    msg = msg + "\n\n" +
                             "Id: " + + event.id() + "\n" +
                             "Summary: " + event.summary() + "\n" +
-                            "Date and time: " + event.datetime() + "\n" +
-                            "Duration: " + event.duration() + " seconds\n\n";
+                            "Date and time: " + dt + "\n" +
+                            "Duration: " + event.duration() + " seconds";
                 }
             }
         }

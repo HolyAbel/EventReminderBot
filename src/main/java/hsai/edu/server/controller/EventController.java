@@ -23,8 +23,8 @@ public record EventController(
 	}
 
 	@GetMapping("/getEvents/{type}")
-	public Mono<List<EventServiceInterface.EventDto>> findByType(@PathVariable Integer type){
-		return eventService.getByType(type);
+	public Mono<List<EventServiceInterface.EventDto>> findByType(@PathVariable Integer type, @PathVariable Long chatId){
+		return eventService.getByType(type, chatId);
 	}
 
 	@GetMapping("/getNext")

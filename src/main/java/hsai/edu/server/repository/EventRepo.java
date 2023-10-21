@@ -25,20 +25,22 @@ public interface EventRepo extends ReactiveCrudRepository<EventRepo.Event, Long>
 	){}
 
 	Flux<EventRepo.Event> findByDatetime(Instant datetime);
-	Flux<EventRepo.Event>findByType(Integer type);
+	@Query("SELECT * " +
+			"FROM event " +
+			"WHERE event.type = :type AND event.id_user = :chatId " +
+			"ORDER BY event.deadline")
+	Flux<EventRepo.Event>findByType(Integer type, Long chatId);
 
 	@Query("SELECT * " +
 			"FROM event " +
-//			"INNER JOIN user ON event.user_id = user.id" +
-			"WHERE event.datetime > now() " +
+			"WHERE event.datetime > now() AND event.id_user = :chatId " +
 			"ORDER BY event.datetime " +
 			"LIMIT 1")
 	Mono<EventRepo.Event> findNext();
 
 	@Query("SELECT * " +
 			"FROM event " +
-//			"INNER JOIN user ON event.user_id = user.id" +
-			"WHERE event.datetime < :datetime " +
+			"WHERE event.datetime < :datetime AND event.id_user = :chatId " +
 			"ORDER BY event.datetime")
 	Flux<EventRepo.Event> findAllByDatetimeLessThen(Instant datetime);
 }

@@ -13,14 +13,16 @@ public interface UserServiceInterface {
 		Long id,
 		String name,
 		String login,
-		String password
+		String password,
+		Long chatId
 	){
 		public static UserDto fromDbEntity(UserRepo.User user){
 			return new UserDto(
 				user.id(),
 				user.name(),
 				user.login(),
-				user.password()
+				user.password(),
+				user.chatId()
 			);
 		}
 	}
@@ -29,14 +31,16 @@ public interface UserServiceInterface {
 			Long id,
 			String name,
 			String login,
-			String password
+			String password,
+			Long chatId
 	){
 		public static UserRepo.User toDbEntity(UserServiceInterface.AddUserDto addUserDto){
 			return new UserRepo.User(
 					addUserDto.id(),
 					addUserDto.name(),
 					addUserDto.login(),
-					addUserDto.password()
+					addUserDto.password(),
+					addUserDto.chatId()
 			);
 		}
 	}

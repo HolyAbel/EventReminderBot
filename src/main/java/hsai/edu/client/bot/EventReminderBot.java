@@ -46,7 +46,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
 
     private static final String COMMANDS = """
                 Command list:
-                /start
+                /start - start working
                 
                 /help - get help
                 
@@ -100,7 +100,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
 
     private void startCommand(Long chatId, String name) {
         try {
-            userService.addUser(new UserService.AddUserDto(chatId, "", name, ""));;
+            userService.addUser(new UserService.AddUserDto(chatId, "", name, "", chatId));;
         } catch (Exception e) {
             LOG.error("Error of getting user name;", e);
             sendMessage(chatId, "Can't connect to the server.");
@@ -212,7 +212,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
     private void getRecEvents(Long chatId) {
         String msg = "";
         for (int i = 1; i <= 4; i++) {
-            Mono<List<EventServiceInterface.EventDto>> eventMonoList = eventService.getByType(i);
+            Mono<List<EventServiceInterface.EventDto>> eventMonoList = eventService.getByType(i, chatId);
             if (Objects.equals(eventMonoList.block(), null)) {
                 switch (i) {
                     case 1 -> msg += "\nCannot find hourly event\n\n";

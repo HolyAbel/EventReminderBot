@@ -17,7 +17,8 @@ public interface UserRepo extends ReactiveCrudRepository<UserRepo.User, Long> {
 		Long id,
 		String name,
 		String login,
-		String password
+		String password,
+		Long chatId
 	){}
 
 	Mono<UserRepo.User> findByName(@Param("name") String name);

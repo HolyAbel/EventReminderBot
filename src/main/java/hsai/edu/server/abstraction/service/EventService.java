@@ -31,9 +31,9 @@ public class EventService implements EventServiceInterface {
 	}
 
 	@Override
-	public Mono<List<EventDto>> getByType(Integer type) {
+	public Mono<List<EventDto>> getByType(Integer type, Long chatId) {
 		return eventRepo
-				.findByType(type)
+				.findByType(type, chatId)
 				.map(EventDto::fromDbEntity)
 				.collectList();
 	}

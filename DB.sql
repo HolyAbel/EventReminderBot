@@ -8,7 +8,7 @@ CREATE TABLE `user` (
   `password` varchar(45) NOT NULL,
   `chat_id` bigint NOT NULL,
   PRIMARY KEY (`id`,`chat_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 --
 -- Dumping data for table `user`
 --
@@ -25,7 +25,7 @@ CREATE TABLE `event` (
   `type` tinyint NOT NULL,
   `is_end` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 --
 -- Dumping data for table `event`
 --

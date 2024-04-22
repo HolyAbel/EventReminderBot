@@ -63,7 +63,7 @@ public class EventReminderBot extends TelegramLongPollingBot {
                 
                 /week_event - get events for a week
                 
-                /rec_events - get all recurring tasks
+                /rec_events - get all recurring events
             """;
 
     public EventReminderBot(@Value("${bot.token}") String botToken) {

@@ -3,7 +3,7 @@
   
   db:
     build:
-      context: database
+      context: db
       dockerfile: Dockerfile
     image: saintabel/cl_lab5_event_reminder:db
   

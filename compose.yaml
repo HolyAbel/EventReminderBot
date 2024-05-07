@@ -1,14 +1,14 @@
-version: "3.9"
-services:
-
-db:
-  build:
-    context: database
-    dockerfile: Dockerfile
-  image: saintabel/cl_lab5_event_reminder:db
-
-bot:
-  build:
-    context: bot
-    dockerfile: Dockerfile
-  image: saintabel/cl_lab5_event_reminder:bot
+  version: "3.9"
+  services:
+  
+  db:
+    build:
+      context: database
+      dockerfile: Dockerfile
+    image: saintabel/cl_lab5_event_reminder:db
+  
+  bot:
+    build:
+      context: bot
+      dockerfile: Dockerfile
+    image: saintabel/cl_lab5_event_reminder:bot

@@ -5,10 +5,10 @@ db:
   build:
     context: database
     dockerfile: Dockerfile
-  image: HolyAbel/event_reminder:db
+  image: saintabel/cl_lab5_event_reminder:db
 
 bot:
   build:
     context: bot
     dockerfile: Dockerfile
-  image: HolyAbel/event_reminder:bot
+  image: saintabel/cl_lab5_event_reminder:bot

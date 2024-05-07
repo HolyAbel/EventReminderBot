@@ -27,7 +27,7 @@
         port: 22
 
 - hosts: docker_server
-  name: Start mysql server
+  name: Start docker server
   become: yes
   vars:
     compose_yaml: "{{ compose_file }}"

@@ -82,6 +82,10 @@
         src: "{{ compose_yaml }}"
         dest: /home/ubuntu/project
 
-    - name: Start docker containers
+    - name: Start bot container
       docker_compose:
-        project_src: project/
+        project_src: project/bot
+        
+    - name: Start db container
+      docker_compose:
+        project_src: project/db

@@ -4,12 +4,12 @@ services:
   db:
     image: saintabel/cl_lab5_event_reminder:db
     container_name: db
-    ports:
-      - "3306:3306"
     environment:
       MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
 
-  bot:
+  event_reminder:
     image: saintabel/cl_lab5_event_reminder:bot
     container_name: bot
     ports:

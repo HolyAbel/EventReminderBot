@@ -1,0 +1,54 @@
+- name: Check availability of k8s host
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Wait for k8s port 22
+      wait_for:
+        host: "192.168.199.216"
+        port: 22
+
+- name: Deploy database
+  hosts: localhost
+  tasks:
+    - name: Apply database deployment
+      kubernetes.core.k8s:
+        apply: true
+        namespace: "perek-gv"
+        template: ./templates/db-deployment.yaml
+
+    - name: Apply database service
+      kubernetes.core.k8s:
+        apply: true
+        namespace: "perek-gv"
+        template: ./templates/db-service.yaml
+
+- name: Fill db from backup
+  hosts: localhost
+  tasks:
+    - name: Render backup script template
+      ansible.builtin.template:
+        src: ./templates/DB.sql
+        dest: ./DB.sql
+    - name: Execute backup script
+      community.mysql.mysql_db:
+        login_host: "192.168.199.216"
+        login_port: 3306
+        name: mysql
+        login_user: root
+        target: ./DB.sql
+        state: dump
+
+- name: Deploy services
+  hosts: localhost
+  tasks:
+    - name: Apply event_reminder deployment
+      kubernetes.core.k8s:
+        apply: true
+        namespace: "perek-gv"
+        template: ./templates/event-reminder-deployment.yaml
+
+    - name: Apply event_reminder service
+      kubernetes.core.k8s:
+        apply: true
+        namespace: "perek-gv"
+        template: ./templates/event_reminder-service.yaml

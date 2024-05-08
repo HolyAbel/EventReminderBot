@@ -7,9 +7,7 @@ services:
     ports:
       - "3306:3306"
     environment:
-      MYSQL_DB: "mysql"
-      MYSQL_USER: "root"
-      MYSQL_PASSWORD: "root"
+      MYSQL_ROOT_PASSWORD: root
 
   bot:
     image: saintabel/cl_lab5_event_reminder:bot

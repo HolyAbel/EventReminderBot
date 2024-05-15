@@ -29,7 +29,7 @@ spec:
               value: r2dbc:mysql://db:3306/event_reminder
             - name: SPRING_DATASOURCE_USERNAME
               value: user
-          image: saintabel/cl_lab5_event_reminder:db
+          image: saintabel/cl_lab5_event_reminder:bot
           name: bot
           ports:
             - containerPort: 8081

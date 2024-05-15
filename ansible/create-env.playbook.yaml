@@ -22,22 +22,6 @@
         namespace: "perek-gv"
         template: ./templates/db-service.yaml
 
-- name: Fill db from backup
-  hosts: localhost
-  tasks:
-    - name: Render backup script template
-      ansible.builtin.template:
-        src: ./templates/DB.sql
-        dest: ./DB.sql
-    - name: Execute backup script
-      community.mysql.mysql_db:
-        login_host: "192.168.199.216"
-        login_port: 3306
-        name: mysql
-        login_user: root
-        target: ./DB.sql
-        state: dump
-
 - name: Deploy services
   hosts: localhost
   tasks:
